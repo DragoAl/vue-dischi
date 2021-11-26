@@ -47,14 +47,15 @@ export default ({
 
 <style scoped lang="scss">
     #disc-cont {
+        background-color:#1e2d3b ;
         width: 70%;
-        margin: 50px auto;
-        
+        margin: 50px auto 0 ;
         
         #disc-list{
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
+            margin-bottom: 50px;
         }
     }
     .loading {
