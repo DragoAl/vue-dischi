@@ -36,7 +36,6 @@ export default {
             color: white;
         }
         span {
-            
             color:#6d7675 ;
             display: block;
         }

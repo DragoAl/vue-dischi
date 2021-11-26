@@ -49,7 +49,7 @@ export default ({
     #disc-cont {
         background-color:#1e2d3b ;
         width: 70%;
-        margin: 50px auto 0 ;
+        margin: 50px auto  ;
         
         #disc-list{
             display: flex;
