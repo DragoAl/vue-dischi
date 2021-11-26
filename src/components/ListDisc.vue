@@ -1,10 +1,15 @@
 <template>
     <div id="disc-cont">
-        <Disc 
+        <div class="loading" v-if="discsList.length === 0">LOADING...</div>
+        <div v-else id="disc-list">
+            <Disc 
             v-for ="disc, i in discsList"
             :key="i"
             :details="disc"
         />
+        </div>
+
+        
     </div>
 </template>
 
@@ -42,11 +47,21 @@ export default ({
 
 <style scoped lang="scss">
     #disc-cont {
-        width: 80%;
-        margin: 0 auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        width: 70%;
+        margin: 50px auto;
+        
+        
+        #disc-list{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    }
+    .loading {
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+        color: black;
     }
 
 

@@ -1,15 +1,18 @@
 <template>
   <div id="app">
+    <AppHeader/>
     <ListDisc />
   </div>
 </template>
 
 <script>
+import AppHeader from './components/AppHeader.vue'
 import ListDisc from './components/ListDisc.vue'
 
 export default {
   name: 'App',
   components: {
+    AppHeader,
     ListDisc
   }
 }
@@ -28,7 +31,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background-color:#1e2d3b ;
   
 }
 </style>
