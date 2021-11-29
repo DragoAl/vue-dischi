@@ -1,5 +1,16 @@
 <template>
     <div id="disc-cont">
+        <form action="">
+            <select name="" id="">
+                <option value=""></option>
+                <SelectType
+                    v-for="disc, i in filteredTypeToSelect"
+                    :key="i"
+                    :details="disc"/>
+
+            </select>
+        </form>
+       
         <div class="loading" v-if="discsList.length === 0">LOADING...</div>
         <div v-else id="disc-list">
             <Disc 
@@ -16,21 +27,31 @@
 <script>
 import axios from "axios";
 import Disc from '../components/Disc.vue'
+import SelectType from'../components/SelectType.vue'
+
 
 export default ({
     name: 'ListDisc',
     components: {
-        Disc
+        Disc,
+        SelectType
     }, 
 
     data() {
         return {
-           discsList : [], 
+           discsList : [],
+           filteredTypes: [] 
         }
     },
 
     created() {
         this.getDisc();
+    },
+
+    computed: {
+        filteredTypeToSelect() {
+
+        }
     },
 
     methods: {
