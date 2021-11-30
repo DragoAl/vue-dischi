@@ -1,9 +1,12 @@
 <template>
     <div id="disc-cont">
+        <!-- passo nelle props l'array con i generi filtrati -->
+        <!-- richiamo l'eventi passato da emit e gli passo il metodo che setta il genere in base a quello filtrato -->
         <SelectType
             :GenList="filteredTypes"
             @GenreSelect ='SelectedGenre'
         />
+        
        
         <div class="loading" v-if="discsList.length === 0">LOADING...</div>
         <div v-else id="disc-list">
@@ -55,7 +58,6 @@ export default ({
         },
     },
 
-
     methods: {
         getDisc() {
             axios
@@ -66,6 +68,7 @@ export default ({
                 console.log(this.discsList);
             })
         },
+        // filtro l'array per avere elementi univoci
         filteredTypeToSelect() {
             for (let i =0; i< this.discsList.length; i++ ) {
                 if (!this.filteredTypes.includes(this.discsList[i].genre)){
