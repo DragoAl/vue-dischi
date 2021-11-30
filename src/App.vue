@@ -4,8 +4,8 @@
       :filteredTypes="GenreArr"
       @GenreSelect ='SelectedGenre'
       />
-    <ListDisc @genreReady = 'getGenreArr' />
-  </div>
+    <ListDisc :selectOpt='genere' @genreReady = 'getGenreArr' />
+  </div> 
 </template>
 
 <script>
@@ -21,17 +21,20 @@ export default {
   data() {
     return {
       GenreArr: [],
-      selectOpt : 'all'
+      genere : 'all'
     }
       
   },
   methods : {
     SelectedGenre(genere) {
-      this.selectOpt = genere;
+      this.genere = genere;
     },
+    // copio in GenreArr l'array dei generi che si trova in ListDisc 
     getGenreArr (generes) {
       this.GenreArr = generes
-    }
+    },
+
+
   }
 }
 

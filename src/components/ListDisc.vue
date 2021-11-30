@@ -38,8 +38,11 @@ export default ({
         return {
            discsList : [],
            filteredTypes : [],
-           selectOpt : "all"
+        //    selectOpt : "all"
         }
+    },
+    props : {
+        selectOpt: String
     },
 
     created() {
