@@ -1,10 +1,18 @@
 <template>
+<!-- AppHeader e ListDisc fratelli si collegano tra di loro passando i dati attraverso il padre(app) -->
   <div id="app">
     <AppHeader 
-      :filteredTypes="GenreArr"
-      @GenreSelect ='SelectedGenre'
+      :filteredTypes= "GenreArr"
+      @GenreSelect = 'SelectedGenre'
+      :filteredArtist= "ArtistArr"
+      @ArtistSelect= 'SelectedArtist' 
       />
-    <ListDisc :selectOpt='genere' @genreReady = 'getGenreArr' />
+    <ListDisc 
+      :selectOpt= 'genere'
+      :selectArtist= 'artista'
+      @genreReady = 'getGenreArr'
+      @artistReady= 'getArtistArr'
+    />
   </div> 
 </template>
 
@@ -18,14 +26,18 @@ export default {
     AppHeader,
     ListDisc
   },
+
   data() {
     return {
       GenreArr: [],
-      genere : 'all'
+      genere : 'all',
+      ArtistArr:[],
+      artista : 'all'
     }
-      
   },
+
   methods : {
+    // funzione che ricevde il valore dal select e lo copia in genere che comunica l'ele selezionato a listDisc
     SelectedGenre(genere) {
       this.genere = genere;
     },
@@ -33,8 +45,12 @@ export default {
     getGenreArr (generes) {
       this.GenreArr = generes
     },
-
-
+    getArtistArr(artists) {
+      this.ArtistArr = artists;
+    },
+    SelectedArtist(artista) {
+      this.artista = artista;
+    },
   }
 }
 
@@ -53,7 +69,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   background-color:#1e2d3b ;
-  padding-bottom: 50px;
-  
+  height: 1000px;
+  // padding-bottom: 50px;
 }
 </style>

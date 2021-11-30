@@ -2,14 +2,30 @@
     <header> 
         <img src="@/assets/spotify.png" alt="">
         <form action="">
-            <label id="etichetta">SELEZIONA IL TUO GENERE PREFERITO</label>
-            <select name="genre" id="selezione" @change="$emit('GenreSelect', $event.target.value )">
-                <option :value="'all'">All</option>
-                <option v-for="option, i in filteredTypes" :key="i">
-                    {{option}}
-                </option>
-            </select>
+            <div>
+                <label id="etichetta">SELEZIONA IL TUO GENERE PREFERITO</label>
+                <select name="genre" class="selezione" @change="$emit('GenreSelect', $event.target.value )">
+                    <option :value="'all'">All</option>
+                    <option v-for="option, i in filteredTypes" :key="i">
+                        {{option}}
+                    </option>
+                </select>
+
+            </div>
+        
+            <div>
+                <label id="etichetta">SELEZIONA IL TUO ARTISTA PREFERITO</label>
+                <select name="artists" class="selezione" @change="$emit('ArtistSelect', $event.target.value )">
+                    <option :value="'all'">All</option>
+                    <option v-for="artist, i in filteredArtist" :key="i">
+                        {{artist}}
+                    </option>
+                </select>
+            </div>
+
         </form>
+
+        
 
     </header>
 </template>
@@ -18,7 +34,8 @@
 export default {
     name:'AppHeader',
     props : {
-        filteredTypes: Array
+        filteredTypes: Array,
+        filteredArtist: Array
     }
 }
 </script>
@@ -26,17 +43,24 @@ export default {
 <style scoped lang="scss">
     header {
         display: flex;
-        height: 50px;
+        height: 80px;
         background-color: #2e3a46;
         justify-content: space-between;
         
         
         img {
-            width: 40px;
-            margin: 5px 15px;
+            width: 50px;
+            height: 50px;
+            margin: 20px;
         }
     }
-    #selezione {
+
+    form {
+        display: flex;
+
+    }
+
+    .selezione {
         width: 180px;
         height: 35px;
         font-size: 16px;
@@ -44,12 +68,14 @@ export default {
         background-color: #4caf50;
         border: 1px solid black;
         text-align: center;
+        margin-left: 70px;
+        display: inline-block;
 
     }
     #etichetta {
         display: block;
         color: white;
-        margin-bottom: 5px;
+        margin: 10px 10px 5px;
     }
 
 </style>

@@ -38,11 +38,14 @@ export default ({
         return {
            discsList : [],
            filteredTypes : [],
-        //    selectOpt : "all"
+           //selectOpt : "all"
+           filteredArtists: []
         }
     },
     props : {
-        selectOpt: String
+        // prende la stringa che gli viene passata da AppHeader tramite app
+        selectOpt: String,
+        selectArtist: String,
     },
 
     created() {
@@ -52,12 +55,18 @@ export default ({
     computed:{
         // creo un array per filtrare i generi
         filteredListDisk(){
-            if(this.selectOpt === "all"){
+            if(this.selectOpt === "all" && this.selectArtist === "all"){
                 return this.discsList
             }
+
             return this.discsList.filter((item) => {
-                return item.genre.toLowerCase().includes(this.selectOpt.toLowerCase())
-            })
+                if(this.selectOpt !== "all" && this.selectArtist === "all"){
+                    return item.genre.toLowerCase().includes(this.selectOpt.toLowerCase())
+                }else if (this.selectOpt === "all" && this.selectArtist !== "all"){
+                    return item.author.toLowerCase().includes(this.selectArtist.toLowerCase())
+                }   
+            })   
+         
         },
     },
 
@@ -70,7 +79,7 @@ export default ({
                 
                 // passo la lista dei generi con emit, che serve al select
                 this.filteredTypeToSelect();
-                console.log(this.discsList);
+                this.filteredArtistToSelect();
             })
         },
         // filtro l'array per avere elementi univoci
@@ -79,15 +88,23 @@ export default ({
                 if (!this.filteredTypes.includes(this.discsList[i].genre)){
                     this.filteredTypes.push(this.discsList[i].genre)
                 }
-            }
-            // console.log(this.filteredTypes);
-            // return this.filteredTypes
+            }            
+            // $emit comunica l'array filtrato ad app per farlo prendere da AppHeader
             this.$emit('genreReady',this.filteredTypes)
         },
         // riprende il valore dall'array filtrato e lo mette uguale al valore passato dal select
         // SelectedGenre(genere) {
         //     this.selectOpt = genere;
         // }
+        filteredArtistToSelect() {
+            for (let i =0; i< this.discsList.length; i++ ) {
+                if (!this.filteredArtists.includes(this.discsList[i].author)){
+                    this.filteredArtists.push(this.discsList[i].author)
+                }
+            }            
+            // $emit comunica l'array filtrato ad app per farlo prendere da AppHeader
+            this.$emit('artistReady',this.filteredArtists)
+        },
     }
 })
 </script>
@@ -101,7 +118,6 @@ export default ({
         #disc-list{
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
             margin-bottom: 50px;
         }
     }
