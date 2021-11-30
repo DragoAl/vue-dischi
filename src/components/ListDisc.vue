@@ -1,20 +1,14 @@
 <template>
     <div id="disc-cont">
-        <form action="">
-            <select name="" id="">
-                <option value=""></option>
-                <SelectType
-                    v-for="disc, i in filteredTypeToSelect"
-                    :key="i"
-                    :details="disc"/>
-
-            </select>
-        </form>
+        <SelectType
+            :GenList="filteredTypes"
+            @GenreSelect ='SelectedGenre'
+        />
        
         <div class="loading" v-if="discsList.length === 0">LOADING...</div>
         <div v-else id="disc-list">
             <Disc 
-            v-for ="disc, i in discsList"
+            v-for ="disc, i in filteredListDisk"
             :key="i"
             :details="disc"
         />
@@ -40,7 +34,8 @@ export default ({
     data() {
         return {
            discsList : [],
-           filteredTypes: [] 
+           filteredTypes : [],
+           selectOpt : "all"
         }
     },
 
@@ -48,11 +43,18 @@ export default ({
         this.getDisc();
     },
 
-    computed: {
-        filteredTypeToSelect() {
-
-        }
+    computed:{
+        // creo un array per filtrare i generi
+        filteredListDisk(){
+            if(this.selectOpt === "all"){
+                return this.discsList
+            }
+            return this.discsList.filter((item) => {
+                return item.genre.toLowerCase().includes(this.selectOpt.toLowerCase())
+            })
+        },
     },
+
 
     methods: {
         getDisc() {
@@ -60,7 +62,22 @@ export default ({
             .get("https://flynn.boolean.careers/exercises/api/array/music")
             .then((result) =>{
                 this.discsList = result.data.response;
+                this.filteredTypeToSelect();
+                console.log(this.discsList);
             })
+        },
+        filteredTypeToSelect() {
+            for (let i =0; i< this.discsList.length; i++ ) {
+                if (!this.filteredTypes.includes(this.discsList[i].genre)){
+                    this.filteredTypes.push(this.discsList[i].genre)
+                }
+            }
+            console.log(this.filteredTypes);
+            return this.filteredTypes
+        },
+
+        SelectedGenre(genere) {
+            this.selectOpt = genere;
         }
     }
 })
@@ -75,7 +92,7 @@ export default ({
         #disc-list{
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: space-around;
             margin-bottom: 50px;
         }
     }
