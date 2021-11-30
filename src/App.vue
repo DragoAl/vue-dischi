@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <AppHeader/>
-    <ListDisc />
+    <AppHeader 
+      :filteredTypes="GenreArr"
+      @GenreSelect ='SelectedGenre'
+      />
+    <ListDisc @genreReady = 'getGenreArr' />
   </div>
 </template>
 
@@ -14,8 +17,24 @@ export default {
   components: {
     AppHeader,
     ListDisc
+  },
+  data() {
+    return {
+      GenreArr: [],
+      selectOpt : 'all'
+    }
+      
+  },
+  methods : {
+    SelectedGenre(genere) {
+      this.selectOpt = genere;
+    },
+    getGenreArr (generes) {
+      this.GenreArr = generes
+    }
   }
 }
+
 </script>
 
 <style lang="scss">

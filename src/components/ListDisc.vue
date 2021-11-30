@@ -2,10 +2,10 @@
     <div id="disc-cont">
         <!-- passo nelle props l'array con i generi filtrati -->
         <!-- richiamo l'eventi passato da emit e gli passo il metodo che setta il genere in base a quello filtrato -->
-        <SelectType
+        <!-- <SelectType
             :GenList="filteredTypes"
             @GenreSelect ='SelectedGenre'
-        />
+        /> -->
         
        
         <div class="loading" v-if="discsList.length === 0">LOADING...</div>
@@ -24,14 +24,14 @@
 <script>
 import axios from "axios";
 import Disc from '../components/Disc.vue'
-import SelectType from'../components/SelectType.vue'
+// import SelectType from'../components/SelectType.vue'
 
 
 export default ({
     name: 'ListDisc',
     components: {
         Disc,
-        SelectType
+        // SelectType
     }, 
 
     data() {
@@ -64,6 +64,8 @@ export default ({
             .get("https://flynn.boolean.careers/exercises/api/array/music")
             .then((result) =>{
                 this.discsList = result.data.response;
+                
+                // passo la lista dei generi con emit, che serve al select
                 this.filteredTypeToSelect();
                 console.log(this.discsList);
             })
@@ -75,13 +77,14 @@ export default ({
                     this.filteredTypes.push(this.discsList[i].genre)
                 }
             }
-            console.log(this.filteredTypes);
-            return this.filteredTypes
+            // console.log(this.filteredTypes);
+            // return this.filteredTypes
+            this.$emit('genreReady',this.filteredTypes)
         },
-
-        SelectedGenre(genere) {
-            this.selectOpt = genere;
-        }
+        // riprende il valore dall'array filtrato e lo mette uguale al valore passato dal select
+        // SelectedGenre(genere) {
+        //     this.selectOpt = genere;
+        // }
     }
 })
 </script>
